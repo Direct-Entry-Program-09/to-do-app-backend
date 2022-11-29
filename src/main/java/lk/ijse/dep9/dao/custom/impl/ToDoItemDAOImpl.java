@@ -1,11 +1,13 @@
 package lk.ijse.dep9.dao.custom.impl;
 
+import jdk.jshell.Snippet;
 import lk.ijse.dep9.dao.custom.ToDoItemDAO;
+import lk.ijse.dep9.dao.util.status;
 import lk.ijse.dep9.entity.ToDoItem;
+import lk.ijse.dep9.dao.util.status;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +73,22 @@ public class ToDoItemDAOImpl implements ToDoItemDAO {
 
     @Override
     public List<ToDoItem> findAll() {
+        try {
+            Statement stm = connection.createStatement();
+            ResultSet rst = stm.executeQuery("SELECT * FROM user");
+            List<ToDoItem> toDoItemList=new ArrayList<>();
+            while (rst.next()){
+                int id = rst.getInt("id");
+                String username = rst.getString("username");
+                String description = rst.getString("description");
+                String status1 = rst.getString("status");
+
+                toDoItemList.add(new ToDoItem(id,username,description, status.valueOf(status1)));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         return null;
     }
 
