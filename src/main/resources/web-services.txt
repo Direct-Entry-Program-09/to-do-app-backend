@@ -9,3 +9,4 @@ To do item
     update an existing to do item       PATCH   /users/{username}/items/{item-id}
     get all to-do item                  GET     /users/{username}/items
     delete a to-do item                 DELETE  /users/{username}/items/{item-id}
+    delete all items                    DELETE  /users/{username}/items
