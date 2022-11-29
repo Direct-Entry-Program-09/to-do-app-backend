@@ -11,3 +11,10 @@ CREATE TABLE todo_item(
   status ENUM('DONE','NOT-DONE') NOT NULL ,
   CONSTRAINT fk FOREIGN KEY (username) REFERENCES user(username)
 );
+
+INSERT INTO user (username, password, fullName) VALUES ('nipunija','nip123','nipuni jayathilaka'),
+                                                       ('pavijaya','jaya123','pavithra jayathilaka');
+
+INSERT INTO todo_item ( username, description, status) VALUES ('nipunija','wakingup','DONE');
+
+

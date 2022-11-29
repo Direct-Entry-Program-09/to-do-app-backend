@@ -14,6 +14,10 @@ import java.util.Optional;
 public class ToDoItemDAOImpl implements ToDoItemDAO {
     private Connection connection;
 
+    public ToDoItemDAOImpl(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public ToDoItem save(ToDoItem toDoItem){
         try {
