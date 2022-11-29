@@ -6,6 +6,8 @@ import lk.ijse.dep9.entity.ToDoItem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 
 public class ToDoItemDAOImpl implements ToDoItemDAO {
     private Connection connection;
@@ -44,8 +46,14 @@ public class ToDoItemDAOImpl implements ToDoItemDAO {
         }
 
     }
+
     @Override
-    public void delete(Integer id){
+    public long count() {
+        return 0;
+    }
+
+    @Override
+    public void deleteById(Integer id){
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM todo_item WHERE id=?");
             statement.setInt(1,id);
@@ -55,6 +63,22 @@ public class ToDoItemDAOImpl implements ToDoItemDAO {
         }
 
     }
+
+    @Override
+    public boolean existsById(Integer pk) {
+        return false;
+    }
+
+    @Override
+    public List<ToDoItem> findAll() {
+        return null;
+    }
+
+    @Override
+    public Optional<ToDoItem> findById(Integer pk) {
+        return Optional.empty();
+    }
+
     @Override
     public void deleteAll(){
         try {
