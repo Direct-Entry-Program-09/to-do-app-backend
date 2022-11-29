@@ -26,7 +26,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void deleteById(String username) throws ConstraintViolationException {
         try {
-            PreparedStatement stm = connection.prepareStatement("DELETE FROM user WHERE username=?");
+            PreparedStatement stm = connection.prepareStatement("DELETE FROM `user` WHERE username=?");
             stm.setString(1,username);
             stm.executeUpdate();
 
@@ -39,11 +39,11 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean existsById(String username) {
         try {
-            PreparedStatement stmExists = connection.prepareStatement("SELECT * FROM user WHERE username=?");
+            PreparedStatement stmExists = connection.prepareStatement("SELECT * FROM `user` WHERE username=?");
             stmExists.setString(1,username);
             ResultSet resultSet = stmExists.executeQuery();
-            if (resultSet.next()) return true;
-            return false;
+            return resultSet.next();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -57,13 +57,15 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public Optional<User> findById(String username) {
         try {
-            PreparedStatement stmGet = connection.prepareStatement("SELECT * FROM user WHERE username=?");
+            PreparedStatement stmGet = connection.prepareStatement("SELECT * FROM `user` WHERE username=?");
             stmGet.setString(1,username);
             ResultSet rst = stmGet.executeQuery();
             if (rst.next()){
                 String password = rst.getString("password");
                 String fullName = rst.getString("fullName");
-
+                System.out.println("dao"+username);
+                System.out.println("dao"+password);
+                System.out.println("dao"+fullName);
                 return Optional.of(new User(username,password,fullName));
             }else {
                 return Optional.empty();
@@ -76,7 +78,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public Object save(User user) throws ConstraintViolationException {
         try {
-            PreparedStatement stmCreate = connection.prepareStatement("INSERT INTO user (username, password, fullName) VALUES (?,?,?)");
+            PreparedStatement stmCreate = connection.prepareStatement("INSERT INTO `user` (username, password, fullName) VALUES (?,?,?)");
             stmCreate.setString(1,user.getUsername());
             stmCreate.setString(2,user.getPassword());
             stmCreate.setString(3,user.getFullName());
@@ -97,4 +99,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
 
+    @Override
+    public boolean existByPassword(String password) {
+        try {
+            PreparedStatement stmExist = connection.prepareStatement("SELECT * FROM `user` WHERE password=?");
+            stmExist.setString(1,password);
+            ResultSet rst = stmExist.executeQuery();
+            return rst.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

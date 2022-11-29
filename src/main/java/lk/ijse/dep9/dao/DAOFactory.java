@@ -1,8 +1,8 @@
+
 package lk.ijse.dep9.dao;
 
 import lk.ijse.dep9.dao.custom.impl.ToDoItemDAOImpl;
 import lk.ijse.dep9.dao.custom.impl.UserDAOImpl;
-import lk.ijse.dep9.service.custom.impl.ToDoItemServiceImpl;
 
 import java.sql.Connection;
 
@@ -15,7 +15,7 @@ public class DAOFactory {
         return (daoFactory == null) ? daoFactory = new DAOFactory() : daoFactory;
     }
 
-    public <T extends SuperDAO> T getDAO(Connection connection, DAOTypes daoType) {
+    public <T extends SuperDAO> T getDAO(Connection connection, DaoTypes daoType) {
         switch (daoType) {
             case USER:
                 return (T) new UserDAOImpl(connection);

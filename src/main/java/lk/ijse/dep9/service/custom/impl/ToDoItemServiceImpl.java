@@ -1,14 +1,10 @@
 package lk.ijse.dep9.service.custom.impl;
 
 import lk.ijse.dep9.dao.DAOFactory;
-import lk.ijse.dep9.dao.DAOTypes;
-import lk.ijse.dep9.dao.SuperDAO;
+import lk.ijse.dep9.dao.DaoTypes;
 import lk.ijse.dep9.dao.custom.ToDoItemDAO;
-import lk.ijse.dep9.dao.custom.UserDAO;
-import lk.ijse.dep9.dao.custom.impl.ToDoItemDAOImpl;
 import lk.ijse.dep9.dto.ToDoItemDTO;
 import lk.ijse.dep9.entity.ToDoItem;
-import lk.ijse.dep9.entity.User;
 import lk.ijse.dep9.service.custom.ToDoItemService;
 import lk.ijse.dep9.service.util.Converter;
 import lk.ijse.dep9.util.ConnectionUtil;
@@ -22,7 +18,7 @@ public class ToDoItemServiceImpl implements ToDoItemService {
 
 
     public ToDoItemServiceImpl(){
-        this.toDoItemDAO = DAOFactory.getInstance().getDAO(ConnectionUtil.getConnection(), DAOTypes.TODOITEM);
+        this.toDoItemDAO = DAOFactory.getInstance().getDAO(ConnectionUtil.getConnection(), DaoTypes.TODOITEM);
     }
 
     public void addNewToDoItem(ToDoItemDTO toDoItemDTO){

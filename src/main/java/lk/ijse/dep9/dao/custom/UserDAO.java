@@ -7,6 +7,6 @@ import lk.ijse.dep9.entity.SuperEntity;
 import lk.ijse.dep9.entity.User;
 
 public interface UserDAO extends CrudDAO<User,String> {
-
+    boolean existByPassword(String password);
 
 }
