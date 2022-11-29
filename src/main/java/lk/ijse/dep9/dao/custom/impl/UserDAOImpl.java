@@ -7,6 +7,7 @@ import lk.ijse.dep9.entity.User;
 
 import java.io.Serializable;
 import java.sql.*;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -17,7 +18,26 @@ public class UserDAOImpl implements UserDAO {
         this.connection = connection;
     }
 
-    private boolean existByUsername(String username) {
+    @Override
+    public long count() {
+        return 0;
+    }
+
+    @Override
+    public void deleteById(String username) throws ConstraintViolationException {
+        try {
+            PreparedStatement stm = connection.prepareStatement("DELETE FROM user WHERE username=?");
+            stm.setString(1,username);
+            stm.executeUpdate();
+
+        } catch (SQLException e) {
+            if (existsById(username)) throw new ConstraintViolationException("The username cannot be deleted as it is engage in other relations");
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean existsById(String username) {
         try {
             PreparedStatement stmExists = connection.prepareStatement("SELECT * FROM user WHERE username=?");
             stmExists.setString(1,username);
@@ -27,11 +47,15 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
-    public Optional<User> getUserDetails(String username) {
+    public List<User> findAll() {
+        return null;
+    }
+
+    @Override
+    public Optional<User> findById(String username) {
         try {
             PreparedStatement stmGet = connection.prepareStatement("SELECT * FROM user WHERE username=?");
             stmGet.setString(1,username);
@@ -40,18 +64,17 @@ public class UserDAOImpl implements UserDAO {
                 String password = rst.getString("password");
                 String fullName = rst.getString("fullName");
 
-               return Optional.of(new User(username,password,fullName));
+                return Optional.of(new User(username,password,fullName));
             }else {
                 return Optional.empty();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
-    public User create(User user) {
+    public Object save(User user) throws ConstraintViolationException {
         try {
             PreparedStatement stmCreate = connection.prepareStatement("INSERT INTO user (username, password, fullName) VALUES (?,?,?)");
             stmCreate.setString(1,user.getUsername());
@@ -69,15 +92,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void delete(String username) {
-        try {
-            PreparedStatement stm = connection.prepareStatement("DELETE FROM user WHERE username=?");
-            stm.setString(1,username);
-            stm.executeUpdate();
-
-        } catch (SQLException e) {
-            if (existByUsername(username)) throw new ConstraintViolationException("The username cannot be deleted as it is engage in other relations");
-            throw new RuntimeException(e);
-        }
+    public Object update(User entity) throws ConstraintViolationException {
+        return null;
     }
+
+
 }
