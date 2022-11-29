@@ -99,4 +99,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
 
+    @Override
+    public boolean existByPassword(String password) {
+        try {
+            PreparedStatement stmExist = connection.prepareStatement("SELECT * FROM `user` WHERE password=?");
+            stmExist.setString(1,password);
+            ResultSet rst = stmExist.executeQuery();
+            return rst.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

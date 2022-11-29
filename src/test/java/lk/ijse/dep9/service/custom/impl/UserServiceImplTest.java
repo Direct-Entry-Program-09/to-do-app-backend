@@ -6,6 +6,7 @@ import lk.ijse.dep9.dto.UserDTO;
 import lk.ijse.dep9.service.ServiceFactory;
 import lk.ijse.dep9.service.ServiceType;
 import lk.ijse.dep9.service.custom.UserService;
+import lk.ijse.dep9.service.exception.DuplicateException;
 import lk.ijse.dep9.service.exception.NotFoundException;
 import lk.ijse.dep9.util.ConnectionUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -26,7 +27,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceImplTest {
-
     private UserService userService;
     private Connection connection;
 
@@ -50,7 +50,11 @@ class UserServiceImplTest {
     @Test
     void addNewUser() {
        UserDTO userDTO=new UserDTO("anuladiss","anula123","anula111dissanayaka");
+       UserDTO userDTO2=new UserDTO("nipunija","anula123","anula111dissanayaka");
+       UserDTO userDTO3=new UserDTO("anuladisreres","jaya123","anula111dissanayaka");
        assertDoesNotThrow(()->userService.addNewUser(userDTO));
+       assertThrows(DuplicateException.class,()->userService.addNewUser(userDTO2));
+       assertThrows(DuplicateException.class,()->userService.addNewUser(userDTO3));
     }
 
     @Test

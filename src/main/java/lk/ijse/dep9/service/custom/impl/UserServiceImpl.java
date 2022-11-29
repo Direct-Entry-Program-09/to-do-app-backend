@@ -6,6 +6,7 @@ import lk.ijse.dep9.dao.custom.UserDAO;
 import lk.ijse.dep9.dto.UserDTO;
 import lk.ijse.dep9.entity.User;
 import lk.ijse.dep9.service.custom.UserService;
+import lk.ijse.dep9.service.exception.DuplicateException;
 import lk.ijse.dep9.service.exception.NotFoundException;
 import lk.ijse.dep9.service.util.Convertor;
 import lk.ijse.dep9.util.ConnectionUtil;
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addNewUser(UserDTO userDTO) {
+        if (userDAO.existsById(userDTO.getUserName())) throw new DuplicateException("Member with the username already exists");
+        if (userDAO.existByPassword(userDTO.getPassWord())) throw new DuplicateException("Member with the same password already exists");
         userDAO.save(convertor.toUser(userDTO));
     }
 
