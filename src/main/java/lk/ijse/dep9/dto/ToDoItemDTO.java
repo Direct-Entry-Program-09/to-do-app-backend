@@ -1,17 +1,20 @@
 package lk.ijse.dep9.dto;
 
+import lk.ijse.dep9.dto.util.Status;
+
 import java.io.Serializable;
 
 public class ToDoItemDTO implements Serializable {
+
     private Integer id;
     private String username;
     private String description;
-    private String status;
+    private Status status;
 
     public ToDoItemDTO() {
     }
 
-    public ToDoItemDTO(Integer id, String username, String description, String status) {
+    public ToDoItemDTO(Integer id, String username, String description, Status status) {
         this.id = id;
         this.username = username;
         this.description = description;
@@ -42,11 +45,11 @@ public class ToDoItemDTO implements Serializable {
         this.description = description;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -56,7 +59,7 @@ public class ToDoItemDTO implements Serializable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
